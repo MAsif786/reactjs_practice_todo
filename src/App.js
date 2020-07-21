@@ -20,7 +20,8 @@ function App() {
         },
         {
           id : 3,
-          title : 'I am done.'
+          title : 'I am done.',
+          "completed":true
         }
       ]
     }
