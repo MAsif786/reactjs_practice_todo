@@ -1,62 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Todos from './components/Todos'
 import AddTodo from './components/AddTodo'
-// import logo from './logo.svg';
-import uuid from 'uuid';
+import axios from 'axios'
+
+// import uuid from 'uuid';
 
 function Todo() {
 
   // test = 
   const [todos, setTodos] = useState(
     {
-      todos:[
-        {
-          id : 1,
-          title : 'Please Sleep at time',
-          "completed":false
-        },
-        {
-          id : 2,
-          title : 'Go to sleep',
-          "completed":false
-        },
-        {
-          id : 3,
-          title : 'I am done.',
-          "completed":false
-        }
-      ]
+      todos:[]
     }
   )
 
+useEffect(() => {
+    // code to run on component mount
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(res => setTodos({todos: res.data}))
+  }, [])
 
 const markComplete = (id) => {
   
-    // console.log(setTodos);
+    axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`,
+    {
+      completed: !todos.todos.filter((item) => item.id === id)[0].completed
+    });
+
+    // Not work update for new todo's  therefore not added to then
     setTodos({todos : todos.todos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed
-      // console.log(todo)
-      }
-      return todo
-    })
-    })
+          if (todo.id === id) {
+            todo.completed = !todo.completed
+          // console.log(todo)
+          }
+          return todo
+        })
+      })
+   
   
 }
 
 const deleteTodo = (id) => {
-  
-  const newList = todos.todos.filter((item) => item.id !== id);
-  setTodos({"todos" : newList});
+  axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    .then(res => {
+      const newList = todos.todos.filter((item) => item.id !== id);
+      setTodos({"todos" : newList});
+    })
 }
 
 const addTodo = (title) => {
-  const newTodo = {
-    id :  uuid.v4(),
-    title,
-    completed : false
-  }
-  setTodos({ "todos" : [...todos.todos, newTodo] })
+  axios.post('https://jsonplaceholder.typicode.com/todos',
+    {
+      title,
+      completed:false
+    }
+  )
+    .then(res => setTodos({ "todos" : [...todos.todos, res.data] }) )
+  
 }
   return (
     <div>

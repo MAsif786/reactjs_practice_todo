@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import TodoItem from './TodoItem'
 
 function Todos(props) {
@@ -12,5 +13,11 @@ function Todos(props) {
   );
 }
 
+
+Todos.propTypes = {
+	todo: PropTypes.object.isRequired,
+	deleteTodo: PropTypes.func.isRequired,
+	markComplete: PropTypes.func.isRequired
+}
 
 export default Todos;

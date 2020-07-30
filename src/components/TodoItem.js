@@ -43,7 +43,9 @@ function TodoItem(props) {
 }
 
 TodoItem.propTypes = {
-	todo: PropTypes.object.isRequired
+	todo: PropTypes.object.isRequired,
+	deleteTodo: PropTypes.func.isRequired,
+	markComplete: PropTypes.func.isRequired
 }
 
 
