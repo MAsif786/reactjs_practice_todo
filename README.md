@@ -1,7 +1,3 @@
-# Master Branch
-
-Master branch has Build Code. Use develop branch for code development.
-
 # Develop Branch
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
